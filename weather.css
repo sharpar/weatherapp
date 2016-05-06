@@ -1,1 +1,23 @@
 /*Weather App CSS File*/
+
+body {
+    max-width: 42em;
+    padding: 2em;
+    margin: 0 auto;
+    color: #161616;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    background-color: currentColor;
+}
+
+h1 {
+    margin-bottom: 1.375em;
+    color: #fff;
+    font-weight: 100;
+    font-size: 2em;
+    text-transform: uppercase;
+}
+
+p {
+    color: white;
+}
