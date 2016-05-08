@@ -3,6 +3,13 @@
 /*jslint browser: true*/
 /*global $, jQuery, alert*/
 
+function toTitleCase(str) {
+    'use strict';
+    return str.replace(/\w\S*/g, function (txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+}
+
 function getLocation() {
     'use strict';
 
@@ -13,6 +20,12 @@ function getLocation() {
         return;
     }
 
+    function convertWindDirection(dir) {
+        var rose = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'],
+            eightPoint = Math.floor(dir / 45);
+        return rose[eightPoint];
+    }
+
     function success(position) {
         var latitude = position.coords.latitude,
             longitude = position.coords.longitude,
@@ -20,29 +33,42 @@ function getLocation() {
             appid = "&APPID=c0e613d7638b0b5e8fc7d54e1d673a86",
             apiURL = "http://api.openweathermap.org/data/2.5/weather?lat=" + (latitude).toString() + "&lon=" + (longitude).toString() + "&units=metric" + appid;
 
-        output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
+        //output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
 
-        img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=300x300&sensor=false";
+        //img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=300x300&sensor=false";
 
-        output.appendChild(img);
+        //output.appendChild(img);
         console.log(apiURL);
         console.log("api.openweathermap.org/data/2.5/weather?lat=35&lon=139");
 
         $.get(apiURL, function (weather) {
-            //var windDir = convertWindDirection(weather.wind.deg);
-            var temperature = weather.main.temp;
+            var windDir = convertWindDirection(weather.wind.deg),
+                temperature = weather.main.temp,
+                unitLabel;
+
             temperature = parseFloat((temperature).toFixed(0));
             console.log(temperature);
-            //var unitLabel;
+
+            if (units === "imperial") {
+                unitLabel = "F";
+            } else {
+                unitLabel = "C";
+            }
 
             //temperature = parseFloat((temperature).toFixed(1));
 
             console.log(weather);
 
+            $('.location').append(weather.name + ", " + weather.sys.country);
+            $('#conditions').append(toTitleCase(weather.weather[0].description));
+            $('#humidity').append("Humidity: " + weather.main.humidity + "%");
+            $('#wind').append(weather.wind.speed);
+
         }, "jsonp");
 
 
     }
+
 
     function error() {
         output.innerHTML = "Unable to retrieve your location";
