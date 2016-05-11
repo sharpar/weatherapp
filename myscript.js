@@ -34,10 +34,7 @@ function getLocation() {
             longitude = position.coords.longitude,
             img = new Image(),
             appid = "&APPID=c0e613d7638b0b5e8fc7d54e1d673a86",
-            //apiURL = "http://api.openweathermap.org/data/2.5/weather?lat=" + (latitude).toString() + "&lon=" + (longitude).toString() + "&units=metric" + appid,
             forecast = "http://crossorigin.me/https://api.forecast.io/forecast/de58b48418b7a1930004d32486ff7c93/" + (latitude).toString() + "," + (longitude).toString() + "?units=si";
-
-        //output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
 
         //img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=400x200&sensor=false";
 
@@ -53,13 +50,12 @@ function getLocation() {
                 feels = data.currently.apparentTemperature;
 
             temperature = parseFloat((temperature).toFixed(0));
-            feels = parseFloat((feels).toFixed(0));
 
             console.log(temperature);
 
             $('h1').append(city);
-            //$('#temp').append(temperature + " C" + '\xB0');
-            $('#feelslike').append(feels + "\xB0 C");
+            $('#tempcel').append(temperature + "\xB0 C");
+            $('#tempfar').append(temperature + "\xB0 C");
             $('#conditions').append(toTitleCase(data.currently.summary));
             $('#humidity').append("Humidity: " + (data.currently.humidity * 100) + "%");
 
