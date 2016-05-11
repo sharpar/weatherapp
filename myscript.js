@@ -39,7 +39,7 @@ function getLocation() {
 
         //output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
 
-        img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=400x200&sensor=false";
+        //img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=400x200&sensor=false";
 
         output.appendChild(img);
         console.log("api.openweathermap.org/data/2.5/weather?lat=35&lon=139");
@@ -58,27 +58,12 @@ function getLocation() {
             console.log(temperature);
 
             $('h1').append(city);
-            $('#temp').append(temperature + " C" + '\xB0');
-            $('#feelslike').append("Feels like " + feels + " C" + '\xB0');
+            //$('#temp').append(temperature + " C" + '\xB0');
+            $('#feelslike').append(feels + "\xB0 C");
             $('#conditions').append(toTitleCase(data.currently.summary));
             $('#humidity').append("Humidity: " + (data.currently.humidity * 100) + "%");
 
         });
-
-        /*$.get(apiURL, function (weather) {
-            var windDir = convertWindDirection(weather.wind.deg),
-                temperature = weather.main.temp,
-                unitLabel;
-
-            temperature = parseFloat((temperature).toFixed(0));
-            console.log(temperature);
-
-            console.log(weather);
-
-            $('#wind').append(windDir + " " + weather.wind.speed + " knots");
-
-        }, "jsonp");*/
-
 
     }
 
