@@ -18,11 +18,6 @@ h1 {
     margin-bottom: -10px;
 }
 
-#temp {
-    font-size: 3.5em;
-    font-weight: 100;
-}
-
 @font-face {
     font-family: 'MeteoconsRegular';
     src: url('meteocons-webfont.eot');
@@ -38,11 +33,22 @@ h1 {
     padding-top: -10px;
 }
 
+#temp {
+    font-size: 3.5em;
+    font-weight: 100;
+}
+
+#convert {
+    font-size: .4em;
+    font-weight: 100;
+    color: darkgrey;
+}
+
 footer {
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 100px;
+    height: 110px;
 }
 
 footer p {

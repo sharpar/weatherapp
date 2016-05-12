@@ -4,6 +4,7 @@
 /*global $, jQuery, alert*/
 /*jslint devel: true */
 
+var unit = "si";
 
 function toTitleCase(str) {
     'use strict';
@@ -18,10 +19,8 @@ function removeDec(num) {
     return parseFloat((num).toFixed(0));
 }
 
-function getLocation() {
+function getLocation(unit) {
     'use strict';
-
-    var output = document.getElementById("demo");
 
     if (!navigator.geolocation) {
         output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
@@ -39,8 +38,8 @@ function getLocation() {
             longitude = position.coords.longitude,
             img = new Image(),
             appid = "&APPID=c0e613d7638b0b5e8fc7d54e1d673a86",
-            forecast = "http://crossorigin.me/https://api.forecast.io/forecast/de58b48418b7a1930004d32486ff7c93/" + (latitude).toString() + "," + (longitude).toString() + "?units=si";
-
+            forecast = "http://crossorigin.me/https://api.forecast.io/forecast/de58b48418b7a1930004d32486ff7c93/" + (latitude).toString() + "," + (longitude).toString() + "?units=" + unit;
+        console.log(unit);
         //img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=400x200&sensor=false";
 
         //output.appendChild(img);
@@ -60,7 +59,7 @@ function getLocation() {
             console.log(icon.attr("data-icon"));
 
 
-            $('h1').append(city);
+            $('h1').html(city);
 
             switch (dataicon) {
             case "clear-day":
@@ -116,11 +115,16 @@ function getLocation() {
 
             //if (conditions === "Clear")
 
-            $('#minmax').append(removeDec(data.daily.data[0].temperatureMax) + "\xB0 | " + removeDec(data.daily.data[0].temperatureMin) + "\xB0");
-            $('#temp').append(removeDec(temperature) + "\xB0 C");
-            $('#feelslike').append("Feels like " + removeDec(feels) + "\xB0 C");
-            $('#conditions').append(conditions);
-            $('#humidity').append("Humidity - " + (data.currently.humidity * 100) + "%");
+            $('#minmax').html(removeDec(data.daily.data[0].temperatureMax) + "\xB0 | " + removeDec(data.daily.data[0].temperatureMin) + "\xB0");
+            if (unit == "si") {
+                $('#temp').html(removeDec(temperature) + "\xB0 C" + '<span id="convert"> F</span>');
+                $('#feelslike').html("Feels like " + removeDec(feels) + "\xB0 C");
+            } else {
+                $('#temp').html(removeDec(temperature) + "\xB0 F" + '<span id="convert"> C</span>');
+                $('#feelslike').html("Feels like " + removeDec(feels) + "\xB0 F");
+            }
+            $('#conditions').html(conditions);
+            $('#humidity').html("Humidity - " + (data.currently.humidity * 100) + "%");
 
         });
 
@@ -137,6 +141,18 @@ function getLocation() {
 
 $(document).ready(function () {
     'use strict';
-    getLocation();
+
+    getLocation("si");
+
+    $("#temp").on('click', function () {
+        if (unit === "si") {
+            unit = "us";
+            getLocation("us");
+        } else {
+            unit = "si";
+            getLocation("si");
+        }
+
+    });
 
 });
