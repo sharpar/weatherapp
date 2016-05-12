@@ -15,7 +15,7 @@ function getLocation(unit) {
     'use strict';
 
     if (!navigator.geolocation) {
-        $('#icon').html("<p>Geolocation is not supported by your browser</p>");
+        $('#minmax').html("Geolocation is not supported by your browser");
         return;
     }
 
@@ -102,14 +102,17 @@ function getLocation(unit) {
     }
 
     function error() {
-        $('#icon').html("Unable to retrieve your location");
+        $('#minmax').html("Unable to retrieve your location");
     }
+
     navigator.geolocation.getCurrentPosition(success, error);
 }
 
 
 $(document).ready(function () {
     'use strict';
+
+    $('#minmax').html("Loading...");
 
     getLocation("si");
 
