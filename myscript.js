@@ -51,15 +51,76 @@ function getLocation() {
 
             var city = data.timezone.substr(data.timezone.indexOf("/") + 1).replace("-", " "),
                 temperature = data.currently.temperature,
-                feels = data.currently.apparentTemperature;
+                feels = data.currently.apparentTemperature,
+                conditions = toTitleCase(data.currently.summary),
+                icon = $('#icon'),
+                dataicon = data.daily.icon;
+
+
+            console.log(icon.attr("data-icon"));
 
 
             $('h1').append(city);
+
+            switch (dataicon) {
+            case "clear-day":
+                icon.attr("data-icon", "B");
+                icon.css("color", "#ffff66");
+                break;
+            case "clear-night":
+                icon.attr("data-icon", "C");
+                break;
+            case "rain":
+                icon.attr("data-icon", "R");
+                icon.css("color", "#1aa3ff");
+                break;
+            case "snow":
+                icon.attr("data-icon", "V");
+                icon.css("color", "#cceeff");
+                break;
+            case "sleet":
+                icon.attr("data-icon", "W");
+                break;
+            case "wind":
+                icon.attr("data-icon", "F");
+                break;
+            case "fog":
+                icon.attr("data-icon", "L");
+                icon.css("color", "#e6e6e6");
+                break;
+            case "cloudy":
+                icon.attr("data-icon", "Y");
+                break;
+            case "partly-cloudy-day":
+                icon.attr("data-icon", "H");
+                icon.css("color", "#ffffcc");
+                break;
+            case "partly-cloudy-night":
+                icon.attr("data-icon", "I");
+                break;
+            case "hail":
+                icon.attr("data-icon", "X");
+                break;
+            case "thunderstorm":
+                icon.attr("data-icon", "0");
+                icon.css("color", "#d9d9d9");
+                break;
+            case "tornado":
+                icon.attr("data-icon", "T");
+                break;
+            default:
+                icon.attr("data-icon", "");
+            }
+
+            console.log(icon.attr("data-icon"));
+
+            //if (conditions === "Clear")
+
             $('#minmax').append(removeDec(data.daily.data[0].temperatureMax) + "\xB0 | " + removeDec(data.daily.data[0].temperatureMin) + "\xB0");
             $('#temp').append(removeDec(temperature) + "\xB0 C");
             $('#feelslike').append("Feels like " + removeDec(feels) + "\xB0 C");
-            $('#conditions').append(toTitleCase(data.currently.summary));
-            $('#humidity').append("Humidity: " + (data.currently.humidity * 100) + "%");
+            $('#conditions').append(conditions);
+            $('#humidity').append("Humidity - " + (data.currently.humidity * 100) + "%");
 
         });
 
