@@ -6,13 +6,13 @@ body {
     font-family: 'Roboto', sans-serif;
     text-align: center;
     color: white;
-    ;
+    text-transform: uppercase;
 }
 
 h1 {
     margin-bottom: 1.375em;
-    font-weight: 100;
     font-size: 2em;
+    font-weight: 300;
     text-transform: uppercase;
     padding-top: 20px;
     margin-bottom: -10px;
@@ -35,12 +35,10 @@ h1 {
 
 #temp {
     font-size: 3.5em;
-    font-weight: 100;
 }
 
 #convert {
     font-size: .4em;
-    font-weight: 100;
     color: darkgrey;
 }
 
