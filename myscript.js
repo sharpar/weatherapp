@@ -13,6 +13,11 @@ function toTitleCase(str) {
 
 }
 
+function removeDec(num) {
+    'use strict';
+    return parseFloat((num).toFixed(0));
+}
+
 function getLocation() {
     'use strict';
 
@@ -38,8 +43,7 @@ function getLocation() {
 
         //img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=400x200&sensor=false";
 
-        output.appendChild(img);
-        console.log("api.openweathermap.org/data/2.5/weather?lat=35&lon=139");
+        //output.appendChild(img);
 
         $.getJSON(forecast, function (data) {
             console.log(data);
@@ -49,13 +53,11 @@ function getLocation() {
                 temperature = data.currently.temperature,
                 feels = data.currently.apparentTemperature;
 
-            temperature = parseFloat((temperature).toFixed(0));
-
-            console.log(temperature);
 
             $('h1').append(city);
-            $('#tempcel').append(temperature + "\xB0 C");
-            $('#tempfar').append(temperature + "\xB0 C");
+            $('#minmax').append(removeDec(data.daily.data[0].temperatureMax) + "\xB0 | " + removeDec(data.daily.data[0].temperatureMin) + "\xB0");
+            $('#temp').append(removeDec(temperature) + "\xB0 C");
+            $('#feelslike').append("Feels like " + removeDec(feels) + "\xB0 C");
             $('#conditions').append(toTitleCase(data.currently.summary));
             $('#humidity').append("Humidity: " + (data.currently.humidity * 100) + "%");
 
