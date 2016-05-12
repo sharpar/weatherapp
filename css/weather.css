@@ -45,10 +45,9 @@ h1 {
 }
 
 footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+    text-align: center;
     height: 110px;
+    padding-top: 20%;
 }
 
 footer p {
