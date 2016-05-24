@@ -32,18 +32,20 @@ function getLocation(unit) {
             var city = data.timezone.substr(data.timezone.indexOf("/") + 1).replace("-", " "),
                 temperature = data.currently.temperature,
                 feels = data.currently.apparentTemperature,
-                icon = $('#icon'),
-                dataicon = data.daily.icon;
+                icon = $('#icon');
+
+            console.log(data);
 
             $('h1').html(city);
 
-            switch (dataicon) {
+            switch (data.currently.icon) {
             case "clear-day":
                 icon.attr("data-icon", "B");
                 icon.css("color", "#ffff66");
                 break;
             case "clear-night":
                 icon.attr("data-icon", "C");
+                icon.css("color", "#bdc3c7");
                 break;
             case "rain":
                 icon.attr("data-icon", "R");
@@ -95,7 +97,7 @@ function getLocation(unit) {
             }
             $('#feelslike').html("Feels like " + removeDec(feels) + "\xB0");
             $('#conditions').html(data.currently.summary.replace('-', ' '));
-            $('#humidity').html("Humidity: " + (data.currently.humidity * 100) + "%");
+            $('#humidity').html("Humidity: " + (removeDec(data.currently.humidity * 100)) + "%");
 
         });
 
